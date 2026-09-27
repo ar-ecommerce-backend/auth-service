@@ -1,6 +1,6 @@
 # auth-service
 
-Authentication for the [ar-ecommerce-platform](https://github.com/ar-ecommerce-platform):
+Authentication for the [ar-ecommerce-backend](https://github.com/ar-ecommerce-backend):
 registration, login, and JWT issuance/validation.
 
 - **Port:** 8081
@@ -56,7 +56,7 @@ Quality config is vendored: `gradle/quality.gradle`, `config/checkstyle/`.
 - **API / web slice** — `controller/AuthControllerTest` (`@WebMvcTest` + MockMvc, service mocked): `POST /auth/register` → 201 / 409; `POST /auth/login` → token JSON; bad credentials → 401 with the `ApiError` body; `GET /auth/validate` echoes the token subject.
 - **Repository slice** — `repository/UserRepositoryTest` (`@DataJpaTest`): `findByEmail` / `existsByEmail` against an embedded database.
 
-End-to-end auth (register → login → bearer) is covered through the gateway in [e2e-tests](https://github.com/ar-ecommerce-platform/e2e-tests).
+End-to-end auth (register → login → bearer) is covered through the gateway in [e2e-tests](https://github.com/ar-ecommerce-backend/e2e-tests).
 
 ## Config
 
