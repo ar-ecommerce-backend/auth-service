@@ -26,11 +26,21 @@ server:
 
 security:
   jwt:
-    # Dev-only fallback. Real value is injected from the environment (see infra/compose/.env).
+    # Required, no fallback: injected from the environment (see infra/compose/.env).
     # HS256 needs >= 32 bytes.
     secret: ${JWT_SECRET}
     expiration-ms: ${JWT_EXPIRATION_MS:3600000}
     issuer: ${JWT_ISSUER:ecommerce-auth}
+
+# Demo staff/admin accounts (docs ADR 0007). Each is created only when its password is set;
+# passwords are generated per environment (Terraform on AWS, random per run in CI), never committed.
+demo-accounts:
+  staff:
+    email: ${DEMO_STAFF_EMAIL:staff@ar-ecommerce-backend.com}
+    password: ${DEMO_STAFF_PASSWORD:}
+  admin:
+    email: ${DEMO_ADMIN_EMAIL:admin@ar-ecommerce-backend.com}
+    password: ${DEMO_ADMIN_PASSWORD:}
 
 management:
   endpoints:

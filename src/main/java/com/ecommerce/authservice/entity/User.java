@@ -35,7 +35,7 @@ public class User {
 
   @Builder.Default
   @Column(nullable = false)
-  private String role = "USER";
+  private String role = Roles.CUSTOMER;
 
   @Builder.Default
   @Column(nullable = false, updatable = false)

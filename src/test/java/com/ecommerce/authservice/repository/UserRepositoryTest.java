@@ -15,7 +15,8 @@ class UserRepositoryTest {
 
   @BeforeEach
   void seed() {
-    repository.save(User.builder().email("ada@example.com").password("hash").role("USER").build());
+    repository.save(
+        User.builder().email("ada@example.com").password("hash").role("customer").build());
   }
 
   @Test

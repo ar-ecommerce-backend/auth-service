@@ -5,11 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.ecommerce.authservice.dto.LoginRequest;
 import com.ecommerce.authservice.dto.RegisterRequest;
+import com.ecommerce.authservice.entity.Roles;
 import com.ecommerce.authservice.entity.User;
 import com.ecommerce.authservice.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +34,15 @@ class AuthServiceTest {
   }
 
   @Test
+  void register_alwaysGivesTheCustomerRole() {
+    authService.register(new RegisterRequest("ada@example.com", "pw"));
+
+    ArgumentCaptor<User> saved = ArgumentCaptor.forClass(User.class);
+    Mockito.verify(repository).save(saved.capture());
+    assertThat(saved.getValue().getRole()).isEqualTo(Roles.CUSTOMER);
+  }
+
+  @Test
   void register_rejectsDuplicateEmail() {
     Mockito.when(repository.existsByEmail("ada@example.com")).thenReturn(true);
 
@@ -45,7 +56,7 @@ class AuthServiceTest {
         User.builder()
             .email("ada@example.com")
             .password(encoder.encode("secret"))
-            .role("USER")
+            .role("customer")
             .build();
     Mockito.when(repository.findByEmail("ada@example.com")).thenReturn(Optional.of(user));
 
@@ -61,7 +72,7 @@ class AuthServiceTest {
         User.builder()
             .email("ada@example.com")
             .password(encoder.encode("secret"))
-            .role("USER")
+            .role("customer")
             .build();
     Mockito.when(repository.findByEmail("ada@example.com")).thenReturn(Optional.of(user));
 
