@@ -88,7 +88,8 @@ class AuthControllerTest {
   @Test
   void validate_echoesSubjectAndRoles() throws Exception {
     when(jwtService.parse("a.b.c"))
-        .thenReturn(Jwts.claims().subject("ada@example.com").add("roles", List.of("USER")).build());
+        .thenReturn(
+            Jwts.claims().subject("ada@example.com").add("roles", List.of("customer")).build());
 
     mvc.perform(get("/auth/validate").header(HttpHeaders.AUTHORIZATION, "Bearer a.b.c"))
         .andExpect(status().isOk())

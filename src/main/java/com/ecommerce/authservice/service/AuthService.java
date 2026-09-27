@@ -3,6 +3,7 @@ package com.ecommerce.authservice.service;
 import com.ecommerce.authservice.dto.LoginRequest;
 import com.ecommerce.authservice.dto.RegisterRequest;
 import com.ecommerce.authservice.dto.TokenResponse;
+import com.ecommerce.authservice.entity.Roles;
 import com.ecommerce.authservice.entity.User;
 import com.ecommerce.authservice.repository.UserRepository;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthService {
 
-  private static final String DEFAULT_ROLE = "USER";
+  private static final String DEFAULT_ROLE = Roles.CUSTOMER;
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
